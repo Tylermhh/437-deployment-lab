@@ -1,0 +1,7 @@
+:root {
+    --color-background-primary: rgb(225, 216, 245);
+    --color-text-primary: rgb(42, 12, 102);
+    --color-background-header: rgb(195, 204, 237);
+    --color-text-header: rgb(27, 42, 139);
+    --color-link: rgb(120, 38, 5);
+}
