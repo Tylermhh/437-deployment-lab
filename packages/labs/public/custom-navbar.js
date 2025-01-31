@@ -45,7 +45,7 @@ TEMPLATE.innerHTML = `
         }
         
         .link-focus {
-            color: white;
+            color: var(--color-link-focus);
             text-decoration: underline;
         }
         
