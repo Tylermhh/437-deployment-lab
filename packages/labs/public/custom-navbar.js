@@ -46,7 +46,7 @@ TEMPLATE.innerHTML = `
         
         .link-focus {
             color: var(--color-link-focus);
-            text-decoration: solid;
+            text-decoration: underline;
         }
         
         @media only screen and (min-width: 700px){
