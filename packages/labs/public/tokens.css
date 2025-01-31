@@ -1,7 +1,17 @@
 :root {
     --color-background-primary: rgb(225, 216, 245);
-    --color-text-primary: rgb(42, 12, 102);
+    --color-text-primary: rgb(25, 3, 69);
     --color-background-header: rgb(195, 204, 237);
     --color-text-header: rgb(27, 42, 139);
-    --color-link: rgb(120, 38, 5);
+    --color-link:  rgb(25, 3, 69);
+    --color-link-focus: rgb(120, 38, 5);
+}
+
+body.dark-mode {
+    --color-background-primary: rgb(25, 3, 69);
+    --color-text-primary: rgb(225, 216, 245);
+    --color-background-header: rgb(27, 42, 139);
+    --color-text-header: rgb(195, 204, 237);
+    --color-link: rgb(225, 216, 245);
+    --color-link-focus: rgb(255, 165, 118);
 }
