@@ -130,20 +130,39 @@ class CustomNavbar extends HTMLElement {
             checkbox.checked = true;
         }
 
-        console.log("loaded, doing link highlighting now");
-        const currentURL = window.location.href;
-        const navLinks = shadowRoot.querySelectorAll("nav a");
-        navLinks.forEach((link) => {
-            const original_color = link.style.color
-            const root = document.documentElement;
-            const link_highlight = getComputedStyle(root).getPropertyValue("--color-link-focus");
-            if (currentURL.includes(link.href)) {
-                link.classList.add("link-focus");
-            }
-            // link.style.setProperty("text-decoration", currentURL.includes(link.href) ? "underline" : "none");
+        // console.log("loaded, doing link highlighting now");
+        // const currentURL = window.location.href;
+        // const navLinks = shadowRoot.querySelectorAll("nav a");
+        // navLinks.forEach((link) => {
+        //     const original_color = link.style.color
+        //     const root = document.documentElement;
+        //     const link_highlight = getComputedStyle(root).getPropertyValue("--color-link-focus");
+        //     if (currentURL.includes(link.href)) {
+        //         link.classList.add("link-focus");
+        //     }
+        //     // link.style.setProperty("text-decoration", currentURL.includes(link.href) ? "underline" : "none");
+        // });
+
+
+        window.addEventListener("load", () => { // Create a function on the fly
+            // Code in this function will run once the page is done loading
+            console.log("loaded, doing link highlighting now");
+            const currentURL = window.location.href;
+            const navLinks = shadowRoot.querySelectorAll("nav a");
+            navLinks.forEach((link) => {
+                const original_color = link.style.color
+                const root = document.documentElement;
+                const link_highlight = getComputedStyle(root).getPropertyValue("--color-link-focus");
+                if (currentURL.includes(link.href)) {
+                    link.classList.add("link-focus");
+                }
+                // link.style.setProperty("text-decoration", currentURL.includes(link.href) ? "underline" : "none");
+            });
         });
 
     }
 }
+
+
 
 customElements.define("custom-navbar", CustomNavbar);
