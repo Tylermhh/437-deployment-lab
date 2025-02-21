@@ -1,6 +1,7 @@
-import React from "react";
+import React, {useEffect} from "react";
 import "./GroceryPanel.css";
 import {Spinner} from "./components/Spinner.jsx";
+import {groceryFetcher} from "./groceryFetcher.js";
 
 const MDN_URL = "https://mdn.github.io/learning-area/javascript/apis/fetching-data/can-store/products.json";
 
@@ -20,6 +21,7 @@ export function GroceryPanel(props) {
     const [groceryData, setGroceryData] = React.useState([]);
     const [isLoading, setIsLoading] = React.useState(false);
     const [error, setError] = React.useState(null);
+    const [url, setUrl] = React.useState("MDN");
 
     function handleAddTodoClicked(item) {
         const todoName = `Buy ${item.name} (${item.price.toFixed(2)})`;
@@ -27,23 +29,43 @@ export function GroceryPanel(props) {
         props.addTask(item.name);
     }
 
-    async function fetchData(url) {
-        setIsLoading(true);
-        setError(null);
-        await delayMs(2000);
-        const promise = fetch(url);
-        promise
-            .then((res) => res.json())
-            .then((data) => {setGroceryData(data);})
-            .catch((err) => {console.log(err)});
+    useEffect(() => {
+        let isStale = false;
 
-        setIsLoading(false);
-    }
+        async function fetchData(url) {
+            setGroceryData([]);
+            setIsLoading(true);
+            setError(null);
+            await delayMs(2000);
+            const promise = groceryFetcher.fetch(url);
+            promise
+                .then((data) => {
+                    if (!isStale) {
+                        setGroceryData(data);
+                    }
+                })
+                .catch((err) => {
+                    if (!isStale) {
+                        console.log(err)
+                    }
+                });
+
+            setIsLoading(false);
+        }
+
+        fetchData(url)
+        return () => {
+            isStale = true
+        };
+    }, [url])
+
+
 
     function handleDropdownChange(changeEvent) {
-        setGroceryData([]);
         if (changeEvent.target.value !== "") {
-            fetchData(changeEvent.target.value);
+            let newUrl = changeEvent.target.value;
+            // fetchData(newUrl);
+            setUrl(newUrl);
         }
     }
 
@@ -53,11 +75,13 @@ export function GroceryPanel(props) {
             <label className="mb-4 flex gap-4 items-center">
                 Get prices from:
                 <select className="border border-gray-300 p-1 rounded-sm disabled:opacity-50"
-                        disabled={isLoading}
+                        // disabled={isLoading}
+                        value={url}
                         onChange={handleDropdownChange}>
-                    <option value="">(None selected)</option>
-                    <option value={MDN_URL}>MDN</option>
-                    <option value="invalid">Who knows?</option>
+                    <option value="MDN">MDN</option>
+                    <option value="Liquor store">Liquor store</option>
+                    <option value="Butcher">Butcher</option>
+                    <option value="whoknows">Who knows?</option>
                 </select>
                 {isLoading ? <Spinner/> : null}
                 {error ? error : ""}
