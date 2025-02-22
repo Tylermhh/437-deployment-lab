@@ -2,6 +2,7 @@ import React, {useEffect} from "react";
 import "./GroceryPanel.css";
 import {Spinner} from "./components/Spinner.jsx";
 import {groceryFetcher} from "./groceryFetcher.js";
+import {useGroceryFetch} from "./useGroceryFetch.js";
 
 const MDN_URL = "https://mdn.github.io/learning-area/javascript/apis/fetching-data/can-store/products.json";
 
@@ -18,48 +19,12 @@ function delayMs(ms) {
 
 
 export function GroceryPanel(props) {
-    const [groceryData, setGroceryData] = React.useState([]);
-    const [isLoading, setIsLoading] = React.useState(false);
-    const [error, setError] = React.useState(null);
+    // const [groceryData, setGroceryData] = React.useState([]);
+    // const [isLoading, setIsLoading] = React.useState(false);
+    // const [error, setError] = React.useState(null);
     const [url, setUrl] = React.useState("MDN");
 
-    function handleAddTodoClicked(item) {
-        const todoName = `Buy ${item.name} (${item.price.toFixed(2)})`;
-        // TODO complete this
-        props.addTask(item.name);
-    }
-
-    useEffect(() => {
-        let isStale = false;
-
-        async function fetchData(url) {
-            setGroceryData([]);
-            setIsLoading(true);
-            setError(null);
-            await delayMs(2000);
-            const promise = groceryFetcher.fetch(url);
-            promise
-                .then((data) => {
-                    if (!isStale) {
-                        setGroceryData(data);
-                    }
-                })
-                .catch((err) => {
-                    if (!isStale) {
-                        console.log(err)
-                    }
-                });
-
-            setIsLoading(false);
-        }
-
-        fetchData(url)
-        return () => {
-            isStale = true
-        };
-    }, [url])
-
-
+    const {groceryData, isLoading, error} = useGroceryFetch(url)
 
     function handleDropdownChange(changeEvent) {
         if (changeEvent.target.value !== "") {
@@ -68,6 +33,45 @@ export function GroceryPanel(props) {
             setUrl(newUrl);
         }
     }
+
+    function handleAddTodoClicked(item) {
+        const todoName = `Buy ${item.name} (${item.price.toFixed(2)})`;
+        // TODO complete this
+        props.addTask(item.name);
+    }
+
+    // useEffect(() => {
+    //     let isStale = false;
+    //
+    //     async function fetchData(url) {
+    //         setGroceryData([]);
+    //         setIsLoading(true);
+    //         setError(null);
+    //         await delayMs(2000);
+    //         const promise = groceryFetcher.fetch(url);
+    //         promise
+    //             .then((data) => {
+    //                 if (!isStale) {
+    //                     setGroceryData(data);
+    //                 }
+    //             })
+    //             .catch((err) => {
+    //                 if (!isStale) {
+    //                     console.log(err)
+    //                 }
+    //             });
+    //
+    //         setIsLoading(false);
+    //     }
+    //
+    //     fetchData(url)
+    //     return () => {
+    //         isStale = true
+    //     };
+    // }, [url])
+
+
+
 
     return (
         <div>
