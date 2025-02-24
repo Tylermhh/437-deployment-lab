@@ -40,39 +40,6 @@ export function GroceryPanel(props) {
         props.addTask(item.name);
     }
 
-    // useEffect(() => {
-    //     let isStale = false;
-    //
-    //     async function fetchData(url) {
-    //         setGroceryData([]);
-    //         setIsLoading(true);
-    //         setError(null);
-    //         await delayMs(2000);
-    //         const promise = groceryFetcher.fetch(url);
-    //         promise
-    //             .then((data) => {
-    //                 if (!isStale) {
-    //                     setGroceryData(data);
-    //                 }
-    //             })
-    //             .catch((err) => {
-    //                 if (!isStale) {
-    //                     console.log(err)
-    //                 }
-    //             });
-    //
-    //         setIsLoading(false);
-    //     }
-    //
-    //     fetchData(url)
-    //     return () => {
-    //         isStale = true
-    //     };
-    // }, [url])
-
-
-
-
     return (
         <div>
             <h1 className="text-xl font-bold">Groceries prices today</h1>
