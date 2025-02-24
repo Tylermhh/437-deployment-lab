@@ -40,6 +40,7 @@ export function GroceryPanel(props) {
         props.addTask(item.name);
     }
 
+
     return (
         <div>
             <h1 className="text-xl font-bold">Groceries prices today</h1>
